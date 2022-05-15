@@ -6,9 +6,9 @@ from os import environ
 def create_app():
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = environ("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = environ("SECRET_KEY")
+    app.config["SECRET_KEY"] = environ.get("SECRET_KEY")
 
     # initialize the db
     db.init_app(app)
