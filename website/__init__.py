@@ -1,19 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from dotenv import load_dotenv
-from os import getenv
-
-load_dotenv()
-
-db = SQLAlchemy()
+from os import environ
 
 def create_app():
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_DATABASE_URI"] = environ("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = getenv("SECRET_KEY")
+    app.config["SECRET_KEY"] = environ("SECRET_KEY")
 
     # initialize the db
     db.init_app(app)
