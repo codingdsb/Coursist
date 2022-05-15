@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Course
+{% endblock %}
+
+{% block content %}
+<h1>Add A Course</h1>
+
+{% include 'inc/errormessage.html' %}
+<form method="POST" action="add-course">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name of the Course:</label>
+        <input type="text" id="name" name="name" placeholder="Eg: The Complete 2022 Web Development Bootcamp" class="form-control" autocomplete="off" />
+    </div>
+    <div class="mb-3">
+        <label for="link" class="form-label">URL (Link) to the Course:</label>
+        <input type="url" id="link" name="link" placeholder="Eg: https://www.udemy.com/course/the-complete-web-development-bootcamp/" class="form-control" autocomplete="off" />
+    </div>
+    <div class="mb-3">
+        <label for="status">Select Course Status:</label>
+        <select class="form-select" name="status" id="status">
+          <option value="TO_START">I wish to learn from this this course in future</option>
+          <option value="GOING_ON">I am learning from this course presently</option>
+          <option value="COMPLETED">I have completed this course already</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Add</button>
+</form>
+{% endblock %}

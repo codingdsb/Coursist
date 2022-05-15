@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+Coursist | Sign Up
+{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Create Your Coursist Account</h2>
+    {% include 'inc/errormessage.html' %}
+    <form action="signup" method="POST" class="d-flex flex-column">
+         <div class="mb-3">
+            <label for="name">Your Name</label>
+            <input type="text" name="name" id="name" class="form-control" autocomplete="off" placeholder="Eg: John Doe" />
+        </div>
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" autocomplete="off" placeholder="Eg: john@thedoes.com" />
+        </div>
+        <div class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" autocomplete="off" placeholder="Eg: astrongpassword" />
+        </div>
+        <div class="mb-3 text-end d-flex justify-content-between">
+            <span>Already have an account? <a href="{{ url_for('auth.login') }}">Log In</a></span>
+            <input type="submit" class="btn btn-outline-success" value="Sign Up" />
+        </div>
+    </form>
+{% endblock %}

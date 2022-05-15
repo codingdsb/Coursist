@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Course Details
+{% endblock %}
+
+{% block content %}
+
+<h1>Edit {{ course.name | truncate(15) }}</h1>
+<br />
+<span class="text-bg-info p-2 rounded">To not change a field, leave that text box as it is or empty it...</span>
+<br />
+<br />
+{% include 'inc/errormessage.html' %}
+<form method="POST" action="/edit/{{ course.id }}">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" id="name" class="form-control" value="{{ course.name }}" autocomplete="off" />
+    </div>
+
+    <div class="mb-3">
+        <label for="link" class="form-label">Link / URL</label>
+        <input type="text" name="link" id="link" class="form-control" value="{{ course.link }}" autocomplete="off" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        Update
+    </button>
+</form>
+
+{% endblock %}

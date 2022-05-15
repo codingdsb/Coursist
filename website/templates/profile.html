@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Coursist | Your Profile
+{% endblock %}
+
+{% block content %}
+    <h5>Hey {{ name }}! Here is your course status distribution. Here you can analyze how fast you progress.</h5>
+
+    <div class="d-flex flex-column justify-content-center align-items-center my-4">
+        <div id="table"></div>
+        <div id="piechart"></div>
+        <div id="barchart"></div>
+    </div>
+
+    <script>
+
+        // colors
+        const FUTURE_COURSES_COLOR = "#198754";
+        const PRESENT_COURSES_COLOR = "#0d6efd";
+        const PAST_COURSES_COLOR = "#dc3545";
+
+        // get data from server
+
+        var future = {{ to_start_courses }};
+        var present = {{ going_on_courses }};
+        var past = {{ finished_courses }};
+
+        // function to render the chart
+        const drawCharts = () => {
+            // data
+            var data = google.visualization.arrayToDataTable([
+                ["Course Category", "No. Of Courses", {role:"style"}],
+                ["WishList Courses", future, FUTURE_COURSES_COLOR],
+                ["Courses Going On", present, PRESENT_COURSES_COLOR],
+                ["Completed Courses", past, PAST_COURSES_COLOR]
+            ])
+
+            var options = {
+                width: 700,
+                height: 300,
+            };
+
+            // pie chart
+            var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+            piechart.draw(data, {
+                title: "Pie Chart Form",
+                ...options,
+                slices: {
+                    0: { color: FUTURE_COURSES_COLOR },
+                    1: { color: PRESENT_COURSES_COLOR },
+                    2: { color: PAST_COURSES_COLOR },
+                },
+                is3d: true
+            });
+
+            // bar chart
+            var barchart = new google.visualization.BarChart(document.getElementById("barchart"));
+            barchart.draw(data, {title: "Bar Chart Form", ...options});
+
+            // data for table
+            data = google.visualization.arrayToDataTable([
+                ["Course Category", "No. Of Courses"],
+                ["WishList Courses", future],
+                ["Courses Going On", present],
+                ["Completed Courses", past]
+            ])
+
+            // table
+            var table = new google.visualization.Table(document.getElementById("table"));
+            table.draw(data, {title: "Table Form", height: 120, width: 500});
+        }
+
+        // load visualization API
+        google.charts.load('current', {'packages':['corechart', 'table']});
+
+        // Set callback to run after visualization API is loaded
+        google.charts.setOnLoadCallback(drawCharts);
+
+    </script>
+{% endblock %}

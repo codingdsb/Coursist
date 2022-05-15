@@ -1,0 +1,18 @@
+<form action="login" method="POST" class="d-flex flex-column">
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" class="form-control" autocomplete="off"  />
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" autocomplete="off" />
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" class="form-check-input" name="remember" id="remember" />
+        <label for="password">Remember Me</label>
+    </div>
+    <div class="mb-3 text-end d-flex justify-content-between">
+        <span>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a></span>
+        <input type="submit" class="btn btn-outline-success" value="Log In" />
+    </div>
+</form>

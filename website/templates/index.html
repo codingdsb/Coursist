@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}
+    Coursist | Home
+{% endblock %}
+
+{% block content %}
+
+    {% if current_user.is_authenticated %}
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="h1">Your Courses</span>
+            <a class="btn btn-primary" href="{{ url_for('courses.add_course') }}">Add A Course</a>
+        </div>
+        <div class="d-flex justify-content-between">
+
+            {# CARD FOR COURSES TO START #}
+            <div class="card text-bg-success w-50">
+                <div class="card-header">Courses In Your WishList</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for c in courses %}
+                            {% if c.status == "CourseStatusEnum.TO_START" %}
+                                <li class="list-group-item">
+                                    <a class="course-link" target="_blank" href="{{ c.link }}">{{ c.name }}</a>
+                                    <button class="btn" id="startMenuBtn" data-bs-toggle="dropdown" aria-expanded="false">{% include 'inc/threedots.html' %}</button>
+                                    <ul class="dropdown-menu" aria-labelledby="startMenuBtn">
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-learning/{{ c.id }}">Put in 'Presently Learning' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-finished/{{ c.id }}">Put in 'Completed' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="/edit/{{ c.id }}">Edit Course Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="/delete/{{ c.id }}">Delete This Course</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            &nbsp;
+            {# CARD FOR COURSES GOING ON #}
+            <div class="card w-50 text-bg-primary">
+                <div class="card-header">Courses You Are Learning From</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for c in courses %}
+                            {% if c.status == "CourseStatusEnum.GOING_ON" %}
+                                <li class="list-group-item">
+                                    <a class="course-link" target="_blank" href="{{ c.link }}">{{ c.name }}</a>
+                                    <button class="btn" id="startMenuBtn" data-bs-toggle="dropdown" aria-expanded="false">{% include 'inc/threedots.html' %}</button>
+                                    <ul class="dropdown-menu" aria-labelledby="startMenuBtn">
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-to-start/{{ c.id }}">Put in 'Wish To Learn' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-finished/{{ c.id }}">Put in 'Completed' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="/edit/{{ c.id }}">Edit Course Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="/delete/{{ c.id }}">Delete This Course</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            &nbsp;
+            {# CARD FOR COURSES COMPLETED #}
+            <div class="card w-50 text-bg-danger">
+                <div class="card-header">Courses You Have Finished</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for c in courses %}
+                            {% if c.status == "CourseStatusEnum.COMPLETED" %}
+                                <li class="list-group-item">
+                                    <a class="course-link" target="_blank" href="{{ c.link }}">{{ c.name }}</a>
+                                    <button class="btn" id="startMenuBtn" data-bs-toggle="dropdown" aria-expanded="false">{% include 'inc/threedots.html' %}</button>
+                                    <ul class="dropdown-menu" aria-labelledby="startMenuBtn">
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-to-start/{{ c.id }}">Put in 'Wish To Learn' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/mark-as-learning/{{ c.id }}">Put in 'Presently Learning' Category</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="/edit/{{ c.id }}">Edit Course Details</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="/delete/{{ c.id }}">Delete This Course</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+
+        <h1>COURSIST</h1>
+        <h4 class="text-secondary">Manage all your online learning at one place</h4>
+        <a class="btn btn-primary mb-3" href="{{ url_for('auth.signup') }}">Create New Account</a>
+        <div class="card">
+            <div class="card-body">
+                <h5>Or Log In To Your Coursist Account If You Have</h5>
+                {% include 'inc/loginform.html' %}
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock %}
